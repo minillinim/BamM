@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 ###############################################################################
 #
 # bamFlags - quick and dirty command line bam file flag interpreter
@@ -21,12 +21,11 @@
 ###############################################################################
 
 __author__ = "Michael Imelfort"
-__copyright__ = "Copyright 2014"
+__copyright__ = "Copyright 2014-2020"
 __credits__ = ["Michael Imelfort"]
 __license__ = "LGPLv3"
-__version__ = "1.0.0"
+__version__ = "2.0.0"
 __maintainer__ = "Michael Imelfort"
-__email__ = "mike@mikeimelfort.com"
 __status__ = "Release"
 
 ###############################################################################

@@ -37,11 +37,11 @@ if '-help' not in sys.argv and \
         rename(join('c', 'libBamM.a'), join('bamm', 'libBamM.a'))
 
 else:
-    print
-    print "Embedded C options (for building libPMBam.a) USE: --OPTION<space>PATH"
+    print()
+    print("Embedded C options (for building libPMBam.a) USE: --OPTION<space>PATH")
     for opt in xtra_opts.keys():
-        print "  %s  %s"%(opt,xtra_opts[opt])
-    print
+        print("  %s  %s"%(opt,xtra_opts[opt]))
+    print()
 
 exec(open('bamm/version.py').read()) # loads __version__
 
@@ -61,6 +61,6 @@ setup(
 )
 
 # remove the library
-#to_remove = join('bamm', 'libBamM.a') 
+#to_remove = join('bamm', 'libBamM.a')
 #if exists(to_remove):
 #    remove(to_remove)
