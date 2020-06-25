@@ -21,14 +21,17 @@ RUN \
   && ./configure \
   && make \
   && make install \
+  && cd .. \
   && git clone https://github.com/samtools/htslib.git \
-  && cd ../htslib/ \
+  && cd htslib/ \
   && make \
   && make install \
+  && cd .. \
   && git clone https://github.com/lh3/bwa.git \
   && cd bwa/ \
   && make \
   && cp bwa /usr/bin/ \
+  && cd .. \
   && git clone https://github.com/samtools/samtools.git \
   && cd samtools/ \
   && make \
@@ -38,3 +41,5 @@ RUN \
     setup.py install \
     --with-libcfu-inc /app/BamM/c/libcfu/src/ \
     --with-libhts-inc /app/BamM/c/htslib/htslib
+
+CMD ["bamm"]
