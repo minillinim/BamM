@@ -29,7 +29,6 @@ __copyright__ = "Copyright 2014,2015"
 __credits__ = ["Michael Imelfort", "Ben Woodcroft"]
 __license__ = "LGPLv3"
 __maintainer__ = "Michael Imelfort"
-__email__ = "mike@mikeimelfort.com"
 
 ###############################################################################
 
@@ -170,7 +169,7 @@ class BamScheduler:
                 "Use of the -c option requires an even number of reads " \
                 "(ordered as pairs)")
 
-        for p_index in range(l_paired/2):
+        for p_index in range(l_paired//2):
             # make the output file name and check that it's going to be unique
             out_file = self.makeOutFileName(self.paired[2*p_index])
             if out_file in self.outFiles:
@@ -399,8 +398,8 @@ class BamMaker:
          showCommands - == True -> show all commands being run
          quiet - == True -> suppress output from the mapper
          silent - == True -> suppress all output
-         tmpdir - == tempfile.gettempdir() -> temporary directory for 
-             intermediate files 
+         tmpdir - == tempfile.gettempdir() -> temporary directory for
+             intermediate files
 
         Outputs:
          None
@@ -627,24 +626,23 @@ class BamMaker:
                 self.mem_single_to_sorted_indexed_bam()
             else:
                 self.mem_to_sorted_indexed_bam()
-        
+
         BV = BamValidator(silent=self.quiet or self.silent);
         BV.validate_bam("%s.bam" % self.outFileName)
-        
-                
+
     def _sam_to_sorted_and_run(self, cmdline):
         '''Given a cmdline that generates a SAM file on stdout, run that through
         samtools view |samtools sort
-        
+
         Parameters
         ----------
         cmdline: str
             Command that outputs on stdout a SAM file
-        
+
         Returns
         -------
         Nothing'''
-        
+
         # On some systems where the sorted BAM file goes eventually is on a
         # slower disk, and it would be faster to write to tmp and then
         # move the sorted file to the correct location upon completion.
@@ -669,10 +667,10 @@ class BamMaker:
                                          f.name+'.bam',
                                          self.errorOutput])
                 self._run_cmd(cmdline)
-            
+
                 # It would be preferable to use samtools sort -f, but that seems
                 # broken (at least in 0.1.19) for bam files that get split up.
-                shutil.move("%s.bam" % f.name, 
+                shutil.move("%s.bam" % f.name,
                             "%s.bam" % self.outFileName)
         else:
             # no temporary directory specified, use regular output
@@ -680,14 +678,12 @@ class BamMaker:
                                      self.outFileName+'.bam',
                                      self.errorOutput])
             self._run_cmd(cmdline)
-            
-            
+
     def _run_cmd(self, cmd):
         if self.showCommands and not self.silent:
             print("BamM: Running command: '%s'" % cmd)
             sys.stdout.flush()
         subprocess.check_call(cmd, shell=True)
-    
 
     #---------------------------------------------------------------
     # aln algorithm
@@ -939,7 +935,7 @@ class BamMaker:
                         sortedBamFile+'.bam',
                         self.errorOutput])
         self._run_cmd(cmd)
-        
+
     #---------------------------------------------------------------
     # utilities
 
@@ -989,17 +985,17 @@ class BamMaker:
             (self.database, self.outFileName, suffix, self.numThreads)
         str += "  Alignment algorithm: %s" % self.alignmentAlgorithm
         return str
-        
+
 
 class BamValidator:
     def __init__(self,
                  silent=False):
         self.silent = silent
-                     
+
         self.errorOutput = ''
         if self.silent:
             self.errorOutput = '2> /dev/null'
-        
+
     #---------------------------------------------------------------
     # validate a bam file
 
@@ -1011,7 +1007,7 @@ class BamValidator:
 
         Outputs:
          None
-         
+
         Raises 'DuplicateSequenceNameException' error if sequence names are duplicated.
         '''
         # samtools index cannot be piped, so a tmpfile is required
