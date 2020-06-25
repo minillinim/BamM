@@ -45,15 +45,15 @@ class TestCoverageStats:
     @classmethod
     def setup_class(self):
         """Setup class variables before any tests."""
-        self.even_list = range(10)
+        self.even_list = list(range(10))
         self.even_c_array = (c.c_uint32 * len(self.even_list))()
         self.even_c_array[:] = self.even_list
 
-        self.odd_list = range(9)
+        self.odd_list = list(range(9))
         self.odd_c_array = (c.c_uint32 * len(self.odd_list))()
         self.odd_c_array[:] = self.odd_list
 
-        self.unsorted_list = range(9)
+        self.unsorted_list = list(range(9))
         random.shuffle(self.unsorted_list)
         self.unsorted_c_array = (c.c_uint32 * len(self.unsorted_list))()
         self.unsorted_c_array[:] = self.unsorted_list

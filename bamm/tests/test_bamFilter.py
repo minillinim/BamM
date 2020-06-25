@@ -33,9 +33,9 @@ import subprocess
 try:
     import pysam
 except ImportError:
-    print """ERROR: Some tests for `bamm filter` requires that pysam be installed.
+    print("""ERROR: Some tests for `bamm filter` requires that pysam be installed.
     See 'http://pysam.readthedocs.io/en/latest/installation.html#installation' for 
-    installation details."""
+    installation details.""")
     raise
 
 ###############################################################################
@@ -53,27 +53,27 @@ class TestBamFilter:
         self.bamNames = ["1", "2"]
 
         # the following files already exist
-        self.bamFiles = dict(zip(self.bamNames,
-                                 [os.path.join(self.dataDir, "%s.bam" % name) for name in self.bamNames]))
-        self.testDataDirs = dict(zip(self.bamNames,
-                                     [os.path.join(self.dataDir, name) for name in self.bamNames]))
+        self.bamFiles = dict(list(zip(self.bamNames,
+                                 [os.path.join(self.dataDir, "%s.bam" % name) for name in self.bamNames])))
+        self.testDataDirs = dict(list(zip(self.bamNames,
+                                     [os.path.join(self.dataDir, name) for name in self.bamNames])))
 
 
         # generated files
-        self.outputBamFnames = dict(zip(self.bamNames,
-                                        ["%s_filtered.bam" % name for name in self.bamNames]))
-        self.outputBaiFnames = dict(zip(self.bamNames,
-                                        ["%s_filtered.bam.bai" % name for name in self.bamNames]))
+        self.outputBamFnames = dict(list(zip(self.bamNames,
+                                        ["%s_filtered.bam" % name for name in self.bamNames])))
+        self.outputBaiFnames = dict(list(zip(self.bamNames,
+                                        ["%s_filtered.bam.bai" % name for name in self.bamNames])))
 
 
         # if True tests should fail
         if False:
-            self.bamFiles = dict(zip(self.bamNames,
-                                     [os.path.join(self.dataDir, "f.bam") for _ in self.bamNames]))
-            self.outputBamFnames = dict(zip(self.bamNames,
-                                           ["f_filtered.bam" for _ in self.bamNames]))
-            self.outputBaiFnames = dict(zip(self.bamNames,
-                                            ["f_filtered.bam.bai" for _ in self.bamNames]))
+            self.bamFiles = dict(list(zip(self.bamNames,
+                                     [os.path.join(self.dataDir, "f.bam") for _ in self.bamNames])))
+            self.outputBamFnames = dict(list(zip(self.bamNames,
+                                           ["f_filtered.bam" for _ in self.bamNames])))
+            self.outputBaiFnames = dict(list(zip(self.bamNames,
+                                            ["f_filtered.bam.bai" for _ in self.bamNames])))
 
 
         # test parameters
@@ -151,12 +151,12 @@ class TestBamFilter:
 
         while True:
             try:
-                expected_read = aln_expected.next()
+                expected_read = next(aln_expected)
             except StopIteration:
                 expected_read = None
 
             try:
-                out_read = aln_out.next()
+                out_read = next(aln_out)
             except StopIteration:
                 out_read = None
 
@@ -167,7 +167,8 @@ class TestBamFilter:
             assert_true(out_read is not None, 'Filtered file "%s" contains expected number of reads.' %out)
             assert_true(expected_read.compare(out_read) == 0, 'Filtered file "%s" queries match expected queries.' % out)
 
-    def assert_equal_together_query_sequences(self, (out_a, out_b), expected):
+    def assert_equal_together_query_sequences(self, xxx_todo_changeme, expected):
+        (out_a, out_b) = xxx_todo_changeme
         try:
             aln_expected = pysam.AlignmentFile(expected, "rb")
         except:
@@ -184,7 +185,7 @@ class TestBamFilter:
             raise AssertionError('File of filtered reads "%s" exists and is readable.' % out_b)
 
         try:
-            out_read_b = aln_out_b.next()
+            out_read_b = next(aln_out_b)
         except StopIteration:
             out_read_b = None
             
@@ -192,19 +193,19 @@ class TestBamFilter:
         while True:
             # get next expected read
             try:
-                expected_read = aln_expected.next()
+                expected_read = next(aln_expected)
             except StopIteration:
                 expected_read = None
 
             # get next read for the filtered file that has the last match
             if current_is_a:
                 try:
-                    out_read_a = aln_out_a.next()
+                    out_read_a = next(aln_out_a)
                 except StopIteration:
                     out_read_a = None
             else:
                 try:
-                    out_read_b = aln_out_b.next()
+                    out_read_b = next(aln_out_b)
                 except StopIteration:
                     out_read_b = None
             
@@ -224,7 +225,7 @@ class TestBamFilter:
 
     def testFilter(self):
         for bamName in self.bamNames:
-            for (testName, args) in self.params.iteritems():
+            for (testName, args) in self.params.items():
                 self.generate_bam(bamName, args)
                 out = os.path.join(self.dataDir, self.outputBamFnames[bamName])
                 index = os.path.join(self.dataDir, self.outputBaiFnames[bamName])

@@ -230,9 +230,9 @@ class TestBamParser:
 
     def test_C_extract(self):
         for i_opt in ['', '--interleave']:
-            for b_opt in self.extFlags['mix_bams'].keys():
-                for r_opt in self.extFlags['mix_reads'].keys():
-                    for g_opt in self.extFlags['mix_groups'].keys():
+            for b_opt in list(self.extFlags['mix_bams'].keys()):
+                for r_opt in list(self.extFlags['mix_reads'].keys()):
+                    for g_opt in list(self.extFlags['mix_groups'].keys()):
                         hash_subset = self.predictedOutputs['extracts'] \
                             [i_opt] \
                             [str(self.extFlags['mix_bams'][b_opt])] \
@@ -255,7 +255,7 @@ class TestBamParser:
 
                         # first test that all the files we EXPECT to be there
                         # have in fact been created
-                        for file in hash_subset.keys():
+                        for file in list(hash_subset.keys()):
                             full_path = os.path.join(self.model_dir, file)
                             assert_true(os.path.exists(full_path))
                             sys.stdout.write("%s ---\n" % full_path)

@@ -33,9 +33,9 @@ import subprocess
 try:
     import pysam
 except ImportError:
-    print """ERROR: Some tests for `bamm filter` requires that pysam be installed.
+    print("""ERROR: Some tests for `bamm filter` requires that pysam be installed.
     See 'http://pysam.readthedocs.io/en/latest/installation.html#installation' for 
-    installation details."""
+    installation details.""")
     raise
 
 ###############################################################################
@@ -53,19 +53,19 @@ class TestBamProfiler:
         self.bamNames = ["1", "2"]
 
         # the following files already exist
-        self.bamFiles = dict(zip(self.bamNames,
-                                 [os.path.join(self.dataDir, "%s.bam" % name) for name in self.bamNames]))
+        self.bamFiles = dict(list(zip(self.bamNames,
+                                 [os.path.join(self.dataDir, "%s.bam" % name) for name in self.bamNames])))
 
         # generated files
-        self.outputProfiles = dict(zip(self.bamNames,
-                                        ["%s_profile.txt" % name for name in self.bamNames]))
+        self.outputProfiles = dict(list(zip(self.bamNames,
+                                        ["%s_profile.txt" % name for name in self.bamNames])))
 
         # if True tests should fail
         if False:
-            self.bamFiles = dict(zip(self.bamNames,
-                                     [os.path.join(self.dataDir, "f.bam") for _ in self.bamNames]))
-            self.outputProfiles = dict(zip(self.bamNames,
-                                           ["f_profile.txt" for _ in self.bamNames]))
+            self.bamFiles = dict(list(zip(self.bamNames,
+                                     [os.path.join(self.dataDir, "f.bam") for _ in self.bamNames])))
+            self.outputProfiles = dict(list(zip(self.bamNames,
+                                           ["f_profile.txt" for _ in self.bamNames])))
 
 
         # test parameters
@@ -122,7 +122,7 @@ class TestBamProfiler:
 
         while True:
             try:
-                read = aln.next()
+                read = next(aln)
                 count += 1
             except StopIteration:
                 read = None
@@ -170,7 +170,7 @@ class TestBamProfiler:
 
     def testProfiler(self):
         for bamName in self.bamNames:
-            for (testName, args) in self.params.iteritems():
+            for (testName, args) in self.params.items():
                 self.generate_profile(bamName, args)
                 bam = self.bamFiles[bamName]
                 out = os.path.join(self.dataDir, self.outputProfiles[bamName])
