@@ -46,4 +46,4 @@ docker \
   -v $PWD:/app/data \
   --rm -it \
   "${bamm_image}" \
-  /bin/bash -c "cd /app/data && bamm ${subcommand} ${@}"
+  /bin/bash -c "cd /app/data && bamm ${subcommand} $*"
