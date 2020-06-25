@@ -39,19 +39,19 @@ from multiprocessing import Manager, Process, Value
 import numpy as np
 import sys
 import gzip
-import Queue
+import queue
 import time
 from threading import Thread
 
 # local imports
-from cWrapper import (BM_mappedRead_C,
+from .cWrapper import (BM_mappedRead_C,
                       CWrapper,
                       RPI,
                       RPIConv,
                       RPI2Str,
                       MI)
-from bammExceptions import MixedFileTypesException
-from bamRead import ReadSetManager
+from .bammExceptions import MixedFileTypesException
+from .bamRead import ReadSetManager
 
 ###############################################################################
 ###############################################################################
@@ -574,9 +574,9 @@ class BamExtractor:
             w.start()
 
         # each thread gets its own queue for recieving ReadSet instances on
-        response_queues = dict(zip(thread_ids,
+        response_queues = dict(list(zip(thread_ids,
                                    [self.manager.Queue() for _ in range(threads)]
-                                   )
+                                   ))
                                )
         # The RSM is waiting wor this queue too
         self.RSM.setResponseQueues(response_queues)

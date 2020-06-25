@@ -38,7 +38,7 @@ import os
 import ctypes as c
 
 # local imports
-from cWrapper import CWrapper
+from .cWrapper import CWrapper
 
 
 ###############################################################################
@@ -179,7 +179,7 @@ class BamFilter:
                 
     def _run_cmd(self, cmd):
         if self.showCommands and not self.silent:
-            print "BamM: Running command: '%s'" % cmd
+            print("BamM: Running command: '%s'" % cmd)
             sys.stdout.flush()
         subprocess.check_call(cmd, shell=True)
                 

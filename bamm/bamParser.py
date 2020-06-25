@@ -42,17 +42,17 @@ import numpy as np
 import sys
 
 # local imports
-from cWrapper import (CWrapper,
+from .cWrapper import (CWrapper,
                       BM_bamFile_C,
                       BM_fileInfo_C,
                       BM_LinkWalker_C,
                       BM_coverageType_C,
                       BM_bamType_C,
                       CT)
-from bamLink import BM_linkPair
-from bamFile import BM_bamFile, BM_bamType, BM_fileInfo, BM_coverageType
-from bamMaker import BamValidator
-from bammExceptions import (InvalidNumberOfTypesException,
+from .bamLink import BM_linkPair
+from .bamFile import BM_bamFile, BM_bamType, BM_fileInfo, BM_coverageType
+from .bamMaker import BamValidator
+from .bammExceptions import (InvalidNumberOfTypesException,
                             BAMFileNotFoundException,
                             BAMIndexNotFoundException,
                             NoBAMSFoundException)
@@ -99,7 +99,7 @@ def externalParseWrapper(bAMpARSER,
             break
 
         if verbose:
-            print "Parsing file: %s" % bAMpARSER.bamFiles[bid]
+            print("Parsing file: %s" % bAMpARSER.bamFiles[bid])
 
         # go back into the class to do the work
         coverages = []
@@ -554,7 +554,7 @@ class BamParser:
                 self.BFI.printLinks(sys.stdout)
             else:
                 with open(fileName, "w") as fh:
-                    self.BFI.printLinks(dict(zip(range(len(self.bamFiles)),self.bamFiles)), fh)
+                    self.BFI.printLinks(dict(list(zip(list(range(len(self.bamFiles))),self.bamFiles))), fh)
 
 ###############################################################################
 ###############################################################################

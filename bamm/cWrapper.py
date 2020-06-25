@@ -46,7 +46,7 @@ from bamm.bammExceptions import printError
 
 # C-style enums FTW!
 def enum(*sequential, **named):
-    enums = dict(zip(sequential, range(len(sequential))), **named)
+    enums = dict(list(zip(sequential, list(range(len(sequential))))), **named)
     return type('Enum', (), enums)
 
 ###############################################################################
@@ -467,7 +467,7 @@ class CWrapper:
             # unit tests are run from within the install dir which confuses
             # pkg_resources as there is a folder there called bamm
             # this is a hack to get around that -> prefer resource_filename
-            for dist_path, dist in working_set.entry_keys.items():
+            for dist_path, dist in list(working_set.entry_keys.items()):
                 for d in dist:
                     if d == 'bamm':
                         c_lib = os.path.join(dist_path, d, 'libBamM.a')

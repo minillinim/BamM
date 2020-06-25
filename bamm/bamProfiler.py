@@ -36,7 +36,7 @@ __email__ = "mike@mikeimelfort.com"
 import ctypes as c
 
 # local imports
-from cWrapper import CWrapper
+from .cWrapper import CWrapper
 
 
 ###############################################################################

@@ -37,14 +37,14 @@ import ctypes as c
 import sys
 import multiprocessing as mp
 import gzip
-import Queue
+import queue
 import time
 from copy import deepcopy
 import os
 
 # local import
-from bammExceptions import InvalidParameterSetException
-from cWrapper import RPI, CWrapper, BM_mappedRead_C
+from .bammExceptions import InvalidParameterSetException
+from .cWrapper import RPI, CWrapper, BM_mappedRead_C
 
 ###############################################################################
 ###############################################################################
@@ -120,7 +120,7 @@ class ReadSetManager(object):
          None
         '''
         self._threadsAreValid = False
-        for file_name in self.fnPrefix2ReadSet.keys():
+        for file_name in list(self.fnPrefix2ReadSet.keys()):
             self.fnPrefix2ReadSet[file_name].threadsAreValid = False
 
     def setResponseQueues(self, queues):
@@ -238,7 +238,7 @@ class ReadSetManager(object):
                                                  f_rpi,
                                                  f_thread_id)
                             except InvalidParameterSetException: pass
-                        except Queue.Empty:
+                        except queue.Empty:
                             # avoid wheel spinning
                             time.sleep(2)
                     # else, we have the RS and we're good to go
