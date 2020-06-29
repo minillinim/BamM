@@ -405,7 +405,7 @@ class BamParser:
 
             # dismal failure
             return 1
-            
+
     def _parseOneBam(self, bid):
         '''Parse a single BAM file and append the result
         to the internal mapping results list
@@ -432,7 +432,7 @@ class BamParser:
         pBCT = c.pointer(BCT)
 
         bamfiles_c_array = (c.c_char_p * 1)()
-        bamfiles_c_array[:] = [self.bamFiles[bid]]
+        bamfiles_c_array[:] = [self.bamFiles[bid].encode('utf-8')]
 
         types_c_array = (c.c_int * 1)()
         types_c_array[:] = [self.types[bid]]
