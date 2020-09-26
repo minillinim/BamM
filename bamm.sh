@@ -4,7 +4,7 @@ set -ue
 # This file hides some docker mess from the user
 #
 
-bamm_image="bamm:latest"
+bamm_image="minillinim/bamm:latest"
 
 display_usage() {
   echo "
@@ -39,6 +39,11 @@ display_usage() {
 subcommand="${1:-help}" && shift || true
 if [[ ${subcommand} == "help" ]]; then
   display_usage 0
+fi
+
+if [[ ${subcommand} == "build" ]]; then
+  docker build -t minillinim/bamm:latest "${1}"
+  exit 0
 fi
 
 docker \
